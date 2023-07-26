@@ -1,12 +1,12 @@
 import socket
 from win10toast import ToastNotifier
-
+import time
 
 def receive_file_and_notification():
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     # Replace 'server_ip' with the IP address of the server
-    server_address = ('server_ip', 12345)
+    server_address = ('10.10.37.63', 12346)
 
     try:
         client_socket.connect(server_address)
@@ -14,10 +14,15 @@ def receive_file_and_notification():
         # Receive the text file content from the server
         file_content = client_socket.recv(4096).decode()
 
+        # Save the received content to a file
+        with open('received_file.txt', 'w') as file:
+            file.write(file_content)
+
+
         # Show the notification
         header = 'This is an Alert!'
         message = file_content
-        icon_path = "path_to_icon.ico"  # Replace with the path to the icon file
+        icon_path = "ndwestern_iv4_7.ico"  # Replace with the path to the icon file
         num_notifications = 10
 
         my_notifications = ToastNotifier()
